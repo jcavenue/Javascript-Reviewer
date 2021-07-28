@@ -1,10 +1,10 @@
 
-# Ang mahirap na bahagi ng Object Oriented Javascript - Taglish Version ng the Hard Parts
+# Ang mahirap na bahagi ng Object Oriented Javascript 
 
 ## Creating objects
 
 ### Technique 1
-* Object literal
+* Using Object literal
 
 ```
 	const user1 = {
@@ -50,10 +50,11 @@
 	}
 ```
 
-There is some corner case about this kasi kapag ginamit natin ang ganitong proseso hindi natin nasusunod ang rule ng **DRY Principle** na ang ibig sabihin ay **"do not repeat yourself"**. As you can see the following code above, inuulit lang natin ang method increment which means nagiging redundant na. Iniiwasan lang natin na humaba ang bilang ng ating code at ang Goal is to create an object na ma-rereused ang method or function without hard coding ng paulit-ulit. For example gusto nating gumawa ng 500 user? Baka mawalan kana ng gana mag code.
+There is some corner case about this kasi kapag ginamit natin ang ganitong proseso masiado rin siyang matrabaho at hindi natin nasusunod ang rule ng **DRY Principle** na ang ibig sabihin ay **"do not repeat yourself"**. As you can see the following code above, if we want to create 500+ new user masiadong matrabaho at hindi ganun kasimple.
 
 ---
 ## Ano ba ang dapat nating gawin?
+Ang end goal lang natin is to bundle all this, na kapag nag create tayo ng new object ay magawa parin nating mareused ung mga function or methods na hindi kaylangang na ilagay natin sa loob ng object na ginawa pero kaya parin nating maaccess ung mga methods to reused this.
 
 
 ### Solution 1
@@ -77,7 +78,7 @@ There is some corner case about this kasi kapag ginamit natin ang ganitong prose
 
 Mag-dedeclare tayo ng function kung saan mag-a-accept sya ng dalawang arguments na gagamitin natin sa loob ng ating function. Una mag declare tayo ng const newUser at i-set ang value sa isang empty object sa loob ng ating function. Ngayon gamit ang Object dot notation kaya nating mag-dagdag ng propeties and value sa loob ng ating object. Ipapasa natin ngayon ang ating arguments sa values ng ating properties. Pagkatapos ay irereturn natin ang object na ginawa natin kung saan pwede nating ipasa ang return object sa variables na gusto natin. Ang prosesong ito ay simple lang.
 
-Pero sa pamamagitan ng ganitong proseso nasusunod pa ba natin ang rule ng **DRY principle**? hindi, dahil sa bawat pag-gawa natin ng bagong Object, patuluy pa rin nating inuulit ang function declaration sa bawat isang object na ginawa natin.
+Pero may corner case pa rin tayo. Hindi pa rin natin magawang mareused ung function natin. 
 
 ---
 
@@ -97,11 +98,11 @@ Pero sa pamamagitan ng ganitong proseso nasusunod pa ba natin ang rule ng **DRY 
 		login: function(){console.log("You're LoggedIn");}
 	};
 
-	const user6 = new generateUser('Trisha', 25);
+	const user6 = generateUser('Trisha', 25);
 	user6.increment();
 ```
 
-As soon as we create a new object newUser there is a hidden property created along side with it, which is what we called "**__ proto __**" under the hood there is a linked to the userFunctionStore Object that we can use to access the method inside it. Our end goal is now established when creating an object and this is very simple and straight forward.
+As soon as we create a new object newUser there is a hidden property created along side with it, which is what we called "**__ proto __**". Itong properties na to ay nakaset ang value sa object.prototype na isang linked para maaccess ung mga properties sa parent object or function.
 
 
 
