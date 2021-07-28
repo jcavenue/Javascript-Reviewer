@@ -106,7 +106,7 @@ As soon as we create a new object newUser there is a hidden property created alo
 
 ---
 
-## Solution 3
+### Solution 3
 * Using the keyword that automate the hard work: new;
 
 ```
