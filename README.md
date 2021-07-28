@@ -1,2 +1,2 @@
 # Javascript-Reviewer
-A dedicated repository in my personal learning notes in JavaScript
+A dedicated repository for my personal learning notes in JavaScript
