@@ -104,6 +104,40 @@ Pero may corner case pa rin tayo. Hindi pa rin natin magawang mareused ung funct
 
 As soon as we create a new object newUser there is a hidden property created along side with it, which is what we called "**__ proto __**". Itong properties na to ay nakaset ang value sa object.prototype na isang linked para maaccess ung mga properties sa parent object or function.
 
+---
+
+## Solution 3
+* Using the keyword that automate the hard work: new;
+
+```
+	function UserCreator(name, score){
+		this.name = name;
+		this.score = score;
+	}
+
+	UserCreator.prototype.increment = function(){
+		this.score++;
+	};
+
+	UserCreator.prototype.login = function(){
+		console.log('Login');
+	}
+
+	const user1 = new UserCreator("Eva",9);
+
+	user1.increment();
+```
+
+Note: kapag nagdeclare tayo ng function ay hindi lang ito basta isang function dahil meron pa itong kasamang object. Sa loob ng object na to meron tayo regular property na tinatawag na prototype which is isang empty object. We can access this using dot notation.
+
+Kapag gumamit tayo ng keyword na **new** mino-mutate nya ung ating execution context kung saan meron syang tatlong hakbang na ginagawa.
+
+- Una it create an empty object call **this** 
+- Pangalawa it creates a hidden property which is what we call __ proto __ kung saan nakaset ang values nito sa object.prototype na gumagawa ng bond or linkage sa parent object.
+- Pangatlo ay gumagawa ito ng automatic return statement that returns the object assigned to **this object**. 
+
+---
+
 
 
 
