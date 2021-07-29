@@ -1,5 +1,5 @@
 
-# Ang mahirap na bahagi ng Object Oriented Javascript 
+# Ang Sekretong bahagi ng Object Oriented Javascript 
 
 ## Creating objects
 
@@ -17,10 +17,7 @@
 	user1.increment(); // score = 5
 
 ```
-
-
 ---
-
 ### Technique 2
 * Use Object dot Notations
 
@@ -49,12 +46,12 @@
 		user2.score++;
 	}
 ```
-
-There is some corner case about this kasi kapag ginamit natin ang ganitong proseso masiado rin siyang matrabaho at hindi natin nasusunod ang rule ng **DRY Principle** na ang ibig sabihin ay **"do not repeat yourself"**. As you can see the following code above, if we want to create 500+ new user masiadong matrabaho at hindi ganun kasimple.
+There is some corner case about this kasi kapag ginamit natin ang ganitong mga proseso sa pag-gawa ng object hindi natin maiwasan na humaba ung code structure natin which is iniiwasan natin mangyari at para hindi repetitive ung mga function na ating ginagamit. May mga ilang solusyon para maiwasan natin ito.
 
 ---
 ## Ano ba ang dapat nating gawin?
-Ang end goal lang natin is to bundle all this, na kapag nag create tayo ng new object ay magawa parin nating mareused ung mga function or methods na hindi kaylangang na ilagay natin sa loob ng object na ginawa pero kaya parin nating maaccess ung mga methods to reused this.
+
+Ang end goal lang natin is to bundle all this, na kapag nag create tayo ng new object ay magawa parin nating mareused ung mga function or methods na hindi kaylangang na ilagay natin sa loob ng object na ginawa natin, pero kaya parin nating maaccess ung mga methods to reused this. See some examples below.
 
 
 ### Solution 1
@@ -102,7 +99,7 @@ Pero may corner case pa rin tayo. Hindi pa rin natin magawang mareused ung funct
 	user6.increment();
 ```
 
-As soon as we create a new object newUser there is a hidden property created along side with it, which is what we called "**__ proto __**". Itong properties na to ay nakaset ang value sa object.prototype na isang linked para maaccess ung mga properties sa parent object or function.
+As soon as we create a new object newUser there is a hidden property created along side with it, which is what we called "**__ proto __**". Itong properties na ay pinapalitan ng object.prototype to access functionStore.
 
 ---
 
@@ -128,12 +125,12 @@ As soon as we create a new object newUser there is a hidden property created alo
 	user1.increment();
 ```
 
-Note: kapag nagdeclare tayo ng function ay hindi lang ito basta isang function dahil meron pa itong kasamang object. Sa loob ng object na to meron tayo regular property na tinatawag na prototype which is isang empty object. We can access this using dot notation.
+Note: kapag nagdeclare tayo ng function ay hindi lang ito basta isang function dahil meron pa itong kasamang object. Sa loob ng object na to meron tayo regular property na tinatawag na prototype which is isang object. We can access this using dot notation to add some method.
 
 Kapag gumamit tayo ng keyword na **new** mino-mutate nya ung ating execution context kung saan meron syang tatlong hakbang na ginagawa.
 
 - Una it create an empty object call **this** 
-- Pangalawa it creates a hidden property which is what we call __ proto __ kung saan nakaset ang values nito sa object.prototype na gumagawa ng bond or linkage sa parent object.
+- Pangalawa it creates a hidden property which is what we call __ proto __ kung saan nakaset ang values nito sa object.prototype na gumagawa ng bond or linkage sa nt object.prototpe.
 - Pangatlo ay gumagawa ito ng automatic return statement that returns the object assigned to **this object**. 
 
 ---
@@ -166,7 +163,7 @@ Kapag gumamit tayo ng keyword na **new** mino-mutate nya ung ating execution con
 
 Kapag gumawa tayo ng function inside our function and we use the keyword this. hindi siya maassign sa ating object since ang rule na ung nasa left handside ng dot notation dapat automatically na iaasign ang object pero this keyword will be assigned in window object. Ito ung scoping issues when we use this keyword function in functions. it will be misassigned.
 
-To solve this issues we can use arrow function because it binds the function lexically. Where it was save will determine when it will be called.
+To solve this issues we can use arrow function because it binds the function lexically. Where it was save will determine when it will be called. Meron rin ibang paraan para masolve ang issue na to using bind() or self object.
 
 ```
 	function UserCreator(name, score){
@@ -216,18 +213,23 @@ We're writing our shared methods separately from our object's constructor itself
 ```
 
 ---
+ 
+Ang **Javascript** ay hindi katulad ng ibang Object Oriented Languages dahil naiiba ang implementation nito sa mga counterpart languages. Ang nature ng javascript ay isang **prototypal feature** na kung saan ang *class* keyword are just faking the creation of object. Ang Class keyword ay ginamit dito upang ang manual na pag-gawa ng object and ang pag-insert ng method inside ng ating prototype object ay kusa na niyang ihahandle para satin.
 
-Javascript is not traditionaly a Object Oriented Programming because of its prototypal nature like other language who implement different pattern under the hood
+Ano ang benefits nito:
+- Emerging as a new standard
+- Feels more like style of other language like python etc
 
-benefits:
-emerging as a new standard
-feels more like style of other language like python etc
+Problems:
+99% of developers have no idea how it works and therefore fail in the interview.
 
-Problems: 99% of developers have no idea how it works and therefore fail in the interview
+Sa javascript gumagamit tayo ng tinatawag natin na *dunder proto* which is a hidden propert sa ating objects, functions and array to link to a bunch of bonus functionality na pwede nating magamit some are (Object, Function etc.). This dunder proto has chaining property sa prototype object na kung saan dito nya muna hinahanap ung properties or method na kanyang gagamitin. Lahat ng objects by default ay mayroong dunder proto.
 
-Javascript uses this proto link to give objects, functions and array a bunch of bonus functionality. All objects by default have __ proto __ 
+Notes:
+- With **Object.create** we override the default __ proto __ to object.prototype and replace with functionStore.
 
-- with object.create we override the default __ proto __ to object.prototype and replace with functionStore
-
-But functionStore is an object so it has a __ proto __ reference to
+- But functionStore is an object so it has a __ proto __ reference to
 Object.prototype - we just intercede in the chain
+
+---
+
