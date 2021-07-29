@@ -138,7 +138,96 @@ Kapag gumamit tayo ng keyword na **new** mino-mutate nya ung ating execution con
 
 ---
 
+### What if we want to organize our code inside one of our shared functions - perhaps by defining a new inner function
+* this keyword scoping issues
 
+```
+	function UserCreator(name, score){
+		this.name = name;
+		this.score = score;
+	}
 
+	UserCreator.prototype.increment = function(){
+		function add() {
+			this.score++;
+		};
+		//const add = function(){this.score++}
+		add()
+	};
 
+	UserCreator.prototype.login = function(){
+		console.log('Login');
+	}
 
+	const user1 = new UserCreator("Eva",9);
+
+	user1.increment();
+```
+
+Kapag gumawa tayo ng function inside our function and we use the keyword this. hindi siya maassign sa ating object since ang rule na ung nasa left handside ng dot notation dapat automatically na iaasign ang object pero this keyword will be assigned in window object. Ito ung scoping issues when we use this keyword function in functions. it will be misassigned.
+
+To solve this issues we can use arrow function because it binds the function lexically. Where it was save will determine when it will be called.
+
+```
+	function UserCreator(name, score){
+		this.name = name;
+		this.score = score;
+	}
+
+	UserCreator.prototype.increment = function(){
+	
+		const add = () => {this.score++};
+		add()
+	};
+
+	UserCreator.prototype.login = function(){
+		console.log('Login');
+	}
+
+	const user1 = new UserCreator("Eva",9);
+
+	user1.increment();
+```
+
+---
+
+### Solution 4
+We're writing our shared methods separately from our object's constructor itself in the user.prototype object but in other languange do it in one place. So JS introduce the class keyword that construct our own object and everytime you list a function inside the class it will be automatically add to the object.prototype object. we can create function inside our class without using the 'function' keyword and without semicolon. The class keyword saved us from writing codes.
+
+```
+	class UserCreator{
+		constructor(name, score) {
+			this.name = name;
+			this.score = score;
+		}
+
+		increment () {
+			this.score++;
+		}
+
+		login (){
+			console.log('login');
+		}
+	}
+
+	const user1 = new UserCreator('Jc',10);
+
+	user1.increment();
+```
+
+---
+
+Javascript is not traditionaly a Object Oriented Programming because of its prototypal nature like other language who implement different pattern under the hood
+
+benefits:
+emerging as a new standard
+feels more like style of other language like python etc
+
+Problems: 99% of developers have no idea how it works and therefore fail in the interview
+
+Javascript uses this proto link to give objects, functions and array a bunch of bonus functionality. All objects by default have __ proto __ 
+
+- with object.create we override the default __ proto __ to object.prototype and replace with functionStore
+
+But functionStore is an object so it has a __ proto __ reference to
+Object.prototype - we just intercede in the chain
