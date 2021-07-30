@@ -55,7 +55,7 @@ Ang end goal lang natin is to bundle all this, na kapag nag create tayo ng new o
 
 
 ### Solution 1
-* Generate objects using a function
+* Generate objects using a factory function
 
 ```
 	function userCreator (name, score) {
@@ -99,7 +99,7 @@ Pero may corner case pa rin tayo. Hindi pa rin natin magawang mareused ung funct
 	user6.increment();
 ```
 
-As soon as we create a new object newUser there is a hidden property created along side with it, which is what we called "**__ proto __**". Itong properties na ay pinapalitan ng object.prototype to access functionStore.
+As soon as we create a new object newUser by passing the userfunctionstore as an argument inside our object.create there is a hidden property created along side with it, which is what we called "**__ proto __**" na nakalink sa userFunctionStore object.
 
 ---
 
@@ -233,3 +233,9 @@ Object.prototype - we just intercede in the chain
 
 ---
 
+## Subclassing
+
+Using extend, super 
+
+extend keyword creates a link in __proto__ to the function object prototype to access methods.
+super keyword runs the object constructor to return its object in the extended class to use.
