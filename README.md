@@ -6,3 +6,7 @@ A dedicated repository for my personal learning notes in JavaScript
 - JavaScript Objects
 	* Notes.md
 	* javascript-hard-parts-oop.pdf
+
+- Introduction to ReactJS
+	* Notes.md
+	
