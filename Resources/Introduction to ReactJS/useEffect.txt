@@ -1,0 +1,215 @@
+
+Fake API -
+
+const dummyData = [{}]
+export default dummyData;
+
+------------------------------------------------------------------------------
+
+Sample fetching -
+
+const [characters, setCharacters] = useState([])
+const [loading, setLoading] = useState(true)
+const [error, setError] = useState(null)
+
+useEffect(() => {
+	setLoading(true);
+	setCharacter([]);
+	setError(null);
+
+	fetch('url').
+	then(response => response.json()).
+	then(response => {
+		setLoading(false);
+		setCharacters(response.characters)})
+	.catch(error => {
+		setLoading(false);
+		setError(error);
+	});
+);
+}, []);
+
+//
+
+	rendering
+	
+	{
+		loading ? (<p>Loading</p>) :
+			(<CharacterList characters ={characters} />)
+	}
+	{
+		error && <p className="error">{error.message}</p>
+	}
+
+-------------------------------------------------------------------------------
+Hide your demons! HAHAHAHA EXISTENSIAL ADVICE
+
+Custom hooks -
+
+const useFetch = url => {
+	const [response, setResponse] = useState(null);
+	const [characters, setCharacters] = useState([])
+	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState(null)
+
+	useEffect(() => {
+		setLoading(true);
+		setResponse(null);
+		setError(null);
+
+		fetch('url').
+		then(response => response.json()).
+		then(response => {
+			setLoading(false);
+			setResponse(response)})
+		.catch(error => {
+			setLoading(false);
+			setError(error);
+			});
+		);
+	}, []);
+
+	return [response, loading, error];
+
+}
+                    
+
+	const [response, loading, error] = useFetch(endpoint)
+	const characters = (response && response.characters) || [];
+
+
+-------------------------------------------------------------------------------
+
+Async example -
+
+	const fetchUrl = async () => {
+		try {
+			const response = await fetch(url);
+			const data = await response.json();
+			setResponse(data);
+		} catch(error){
+			setError(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	fetchUrl();
+
+--------------------------------------------------------------------------------
+
+Reducer pattern -
+
+const initialState = {
+	results: null,
+	loading: true,
+	error: null,
+	
+}
+
+const fetchReducer = ( state, action) => {
+	
+	if(action.type === "LOADING"){
+		return {
+			results: null,
+			loading: true,
+			error: null,
+		}
+	
+	}
+
+	if(action.type === "RESPONESE_COMPLETE"){
+		return {
+			results: action.payload.response,
+			loading: false,
+			error: null,
+		}
+	
+	}
+
+	if(action.type === "ERROR"){
+		return {
+			results: null,
+			loading: false,
+			error: action.payload.error,
+		}
+	
+	}
+
+	
+
+	return state;
+}
+
+
+	const useFetch = url => {
+		const [state, dispatch] = useReducer(fetchReducer,initialState)
+		
+	useEffect(() => {
+		dispatch({type: 'LOADING'})
+
+		const fetchUrl = async () => {
+		try {
+			const response = await fetch(url);
+			const data = await response.json();
+			dispatch({type: 'RESPONSE_COMPLETE', payload: {response}})
+		} catch(error){
+			dispatch({type: 'ERROR',})
+		}
+	};
+
+	fetchUrl();
+	
+}, []);
+
+	return [state.results, state.loading, state.error];
+
+}
+
+----------------------------------------------------------------------------------
+
+
+
+Usereducer thunk -
+
+	a function returned from another function
+	a code that us to be executed later.
+
+	const useThunkReducer = (reducer, initialState) => {
+	
+		const [state, dispatch] = useReducer(reducer, initialState);
+		
+		const enhancedDispatch => action => {
+			if(typeof action === function){
+				action(dispatch);
+			} else {
+}
+			dispatch(action)	
+		}
+			
+		return [state, enchanceDispatch];
+
+
+	}
+
+
+
+
+----------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
