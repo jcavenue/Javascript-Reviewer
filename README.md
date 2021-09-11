@@ -9,4 +9,7 @@ A dedicated repository for my personal learning notes in JavaScript
 
 - Introduction to ReactJS
 	* Notes.md
+
+- Functional Programming
+	* functional-programming.pdf
 	
