@@ -13,3 +13,6 @@ A dedicated repository for my personal learning notes in JavaScript
 - Functional Programming
 	* functional-programming.pdf
 	
+
+- Redux
+	* redux_cheatsheet.md
